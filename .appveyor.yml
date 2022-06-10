@@ -10,7 +10,7 @@ build: off
 
 install:
 
-  - java -jar ./app-ibank-build-for-testers.jar &
+  - java -jar ./app-ibank-build-for-testers.jar -P:profile=test &
 
 build_script:
   - chmod +x gradlew
