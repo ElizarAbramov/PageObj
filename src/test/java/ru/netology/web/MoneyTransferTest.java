@@ -25,13 +25,17 @@ public class MoneyTransferTest {
         var verificationCode = DataHelper.getVerificationCode(authInfo);
         verificationPage.validVerify(verificationCode);
         var dashboardPage = new DashboardPage();
-        var checkCardBalance = new CheckCardBalance().getFirstCardBalance();
-        var transferAmount = DataHelper.getTransferAmount(authInfo);
-        var secondCardInfo = DataHelper.getSecondCardNumber(authInfo);
+        var firstCardBalance = new CheckCardBalance().getFirstCardBalance();
+        var secondCardBalance = new CheckCardBalance().getSecondCardBalance();
+        var transferAmount = DataHelper.getTransferAmount();
+        var secondCardInfo = DataHelper.getSecondCardNumber();
+        var chooseCard = new CheckCardBalance().click();
         var checkCardBalanceAfter = dashboardPage.moneyTransfer(transferAmount, secondCardInfo);
         var firstCardAfter = checkCardBalanceAfter.getFirstCardBalance();
+        var secondCardAfter = checkCardBalanceAfter.getSecondCardBalance();
         int transfer = 1500;
-        assertEquals(checkCardBalance + transfer, firstCardAfter);
+        assertEquals(firstCardBalance + transfer, firstCardAfter);
+        assertEquals(secondCardBalance - transfer, secondCardAfter);
     }
 
     @Test
@@ -42,7 +46,27 @@ public class MoneyTransferTest {
         var verificationCode = DataHelper.getVerificationCode(authInfo);
         verificationPage.validVerify(verificationCode);
         var dashboardPage = new DashboardPage();
-        dashboardPage.pushFirstButton();
+        var chooseCard = new CheckCardBalance().click();
         dashboardPage.emptyFields();
+    }
+
+    @Test
+    void shouldShowNotificationWhenTransferIncorrect() {
+        var loginPage = new LoginPage();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCode(authInfo);
+        verificationPage.validVerify(verificationCode);
+        var dashboardPage = new DashboardPage();
+        var firstCardBalance = new CheckCardBalance().getFirstCardBalance();
+        var secondCardBalance = new CheckCardBalance().getSecondCardBalance();
+        var transferAmount = DataHelper.getExceedingTransferAmount();
+        var secondCardInfo = DataHelper.getSecondCardNumber();
+        var chooseCard = new CheckCardBalance().click();
+        var checkCardBalanceAfter = dashboardPage.moneyTransfer(transferAmount, secondCardInfo);
+        var firstCardAfter = checkCardBalanceAfter.getFirstCardBalance();
+        var secondCardAfter = checkCardBalanceAfter.getSecondCardBalance();
+        assertEquals(secondCardBalance, secondCardAfter);
+        assertEquals(firstCardBalance, firstCardAfter);
     }
 }

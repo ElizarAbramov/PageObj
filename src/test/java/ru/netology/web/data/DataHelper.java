@@ -26,21 +26,17 @@ public class DataHelper {
     }
 
     @Value
-    public static class FirstCardInfo {
-        String firstNum;
+    public static class CardInfo {
+        String CardNumber;
     }
 
-    public static FirstCardInfo getFirstCardNumber(AuthInfo authInfo) {
-        return new FirstCardInfo("5559 0000 0000 0001");
+    public static CardInfo getFirstCardNumber() {
+        return new CardInfo("5559 0000 0000 0001");
     }
 
-    @Value
-    public static class SecondCardInfo {
-        String secondNum;
-    }
 
-    public static SecondCardInfo getSecondCardNumber(AuthInfo authInfo) {
-        return new SecondCardInfo("5559 0000 0000 0002");
+    public static CardInfo getSecondCardNumber() {
+        return new CardInfo("5559 0000 0000 0002");
     }
 
     @Value
@@ -48,8 +44,12 @@ public class DataHelper {
         String amount;
     }
 
-    public static TransferAmount getTransferAmount(AuthInfo authInfo) {
+    public static TransferAmount getTransferAmount() {
         return new TransferAmount("1500");
+    }
+
+    public static TransferAmount getExceedingTransferAmount() {
+        return new TransferAmount("21000");
     }
 
 }
