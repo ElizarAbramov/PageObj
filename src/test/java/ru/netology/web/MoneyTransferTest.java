@@ -4,7 +4,7 @@ package ru.netology.web;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.web.data.DataHelper;
-import ru.netology.web.page.CheckCardBalance;
+import ru.netology.web.page.ReplenishmentPage;
 import ru.netology.web.page.DashboardPage;
 import ru.netology.web.page.LoginPage;
 
@@ -25,12 +25,13 @@ public class MoneyTransferTest {
         var verificationCode = DataHelper.getVerificationCode(authInfo);
         verificationPage.validVerify(verificationCode);
         var dashboardPage = new DashboardPage();
-        var firstCardBalance = new CheckCardBalance().getFirstCardBalance();
-        var secondCardBalance = new CheckCardBalance().getSecondCardBalance();
+        var firstCardBalance = new DashboardPage().getFirstCardBalance();
+        var secondCardBalance = new DashboardPage().getSecondCardBalance();
         var transferAmount = DataHelper.getTransferAmount();
         var secondCardInfo = DataHelper.getSecondCardNumber();
-        var chooseCard = new CheckCardBalance().click();
-        var checkCardBalanceAfter = dashboardPage.moneyTransfer(transferAmount, secondCardInfo);
+        var chooseCard = new DashboardPage().replenishment();
+        var replenishmentPage = new ReplenishmentPage();
+        var checkCardBalanceAfter = replenishmentPage.moneyTransfer(transferAmount, secondCardInfo);
         var firstCardAfter = checkCardBalanceAfter.getFirstCardBalance();
         var secondCardAfter = checkCardBalanceAfter.getSecondCardBalance();
         int transfer = 1500;
@@ -45,8 +46,7 @@ public class MoneyTransferTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataHelper.getVerificationCode(authInfo);
         verificationPage.validVerify(verificationCode);
-        var dashboardPage = new DashboardPage();
-        var chooseCard = new CheckCardBalance().click();
+        var dashboardPage = new DashboardPage().replenishment();
         dashboardPage.emptyFields();
     }
 
@@ -58,12 +58,12 @@ public class MoneyTransferTest {
         var verificationCode = DataHelper.getVerificationCode(authInfo);
         verificationPage.validVerify(verificationCode);
         var dashboardPage = new DashboardPage();
-        var firstCardBalance = new CheckCardBalance().getFirstCardBalance();
-        var secondCardBalance = new CheckCardBalance().getSecondCardBalance();
+        var firstCardBalance = dashboardPage.getFirstCardBalance();
+        var secondCardBalance = dashboardPage.getSecondCardBalance();
         var transferAmount = DataHelper.getExceedingTransferAmount();
         var secondCardInfo = DataHelper.getSecondCardNumber();
-        var chooseCard = new CheckCardBalance().click();
-        var checkCardBalanceAfter = dashboardPage.moneyTransfer(transferAmount, secondCardInfo);
+        var chooseCard = dashboardPage.replenishment();
+        var checkCardBalanceAfter = chooseCard.moneyTransfer(transferAmount, secondCardInfo);
         var firstCardAfter = checkCardBalanceAfter.getFirstCardBalance();
         var secondCardAfter = checkCardBalanceAfter.getSecondCardBalance();
         assertEquals(secondCardBalance, secondCardAfter);
