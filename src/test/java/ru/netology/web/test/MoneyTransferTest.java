@@ -1,4 +1,4 @@
-package ru.netology.web;
+package ru.netology.web.test;
 
 
 import org.junit.jupiter.api.BeforeEach;
