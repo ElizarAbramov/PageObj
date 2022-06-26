@@ -25,13 +25,12 @@ public class MoneyTransferTest {
         var verificationCode = DataHelper.getVerificationCode(authInfo);
         verificationPage.validVerify(verificationCode);
         var dashboardPage = new DashboardPage();
-        var firstCardBalance = new DashboardPage().getFirstCardBalance();
-        var secondCardBalance = new DashboardPage().getSecondCardBalance();
+        var firstCardBalance = dashboardPage.getFirstCardBalance();
+        var secondCardBalance = dashboardPage.getSecondCardBalance();
         var transferAmount = DataHelper.getTransferAmount();
-        var secondCardInfo = DataHelper.getSecondCardNumber();
-        var chooseCard = new DashboardPage().replenishment();
+        dashboardPage.replenishment();
         var replenishmentPage = new ReplenishmentPage();
-        var checkCardBalanceAfter = replenishmentPage.moneyTransfer(transferAmount, secondCardInfo);
+        var checkCardBalanceAfter = replenishmentPage.moneyTransfer(transferAmount);
         var firstCardAfter = checkCardBalanceAfter.getFirstCardBalance();
         var secondCardAfter = checkCardBalanceAfter.getSecondCardBalance();
         int transfer = 1500;
@@ -61,9 +60,8 @@ public class MoneyTransferTest {
         var firstCardBalance = dashboardPage.getFirstCardBalance();
         var secondCardBalance = dashboardPage.getSecondCardBalance();
         var transferAmount = DataHelper.getExceedingTransferAmount();
-        var secondCardInfo = DataHelper.getSecondCardNumber();
         var chooseCard = dashboardPage.replenishment();
-        var checkCardBalanceAfter = chooseCard.moneyTransfer(transferAmount, secondCardInfo);
+        var checkCardBalanceAfter = chooseCard.moneyTransfer(transferAmount);
         var firstCardAfter = checkCardBalanceAfter.getFirstCardBalance();
         var secondCardAfter = checkCardBalanceAfter.getSecondCardBalance();
         assertEquals(secondCardBalance, secondCardAfter);

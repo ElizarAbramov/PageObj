@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class DashboardPage {
-    private SelenideElement heading = $("[data-test-id='dashboard']");
+    private final SelenideElement heading = $("[data-test-id='dashboard']");
     private final SelenideElement depositButton = $("[data-test-id='92df3f1c-a033-48e6-8390-206f6b1f56c0'] [class = 'button__text']");
 
     private final ElementsCollection cards = $$(".list__item div");
@@ -25,7 +25,6 @@ public class DashboardPage {
 
     public ReplenishmentPage replenishment() {
         depositButton.click();
-        $("[class='heading heading_size_xl heading_theme_alfa-on-white']").shouldBe(visible).shouldHave(text("Пополнение"));
         return new ReplenishmentPage();
     }
 
